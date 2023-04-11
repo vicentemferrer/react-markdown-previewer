@@ -1,3 +1,18 @@
 textarea, .preview {
-  min-height: 400px !important;
+  min-height: 600px !important;
+}
+
+.preview img {
+  max-width: 80%;
+}
+
+#preview, .left {
+  text-align: left !important;
+}
+
+
+.left {
+  border-radius: 6px 6px 0 0;
+  color: #FFF !important;
+  background-color: #B3005E !important;
 }

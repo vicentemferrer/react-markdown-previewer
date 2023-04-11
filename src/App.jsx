@@ -1,49 +1,36 @@
 import { Component } from 'react'
 import './App.css'
-import { Col, Container, Row } from 'reactstrap'
-import { marked } from 'marked'
+import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap'
+import { marked } from 'marked';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil, faEye } from '@fortawesome/free-solid-svg-icons';
 
-const INITIAL_STATE = `
-# Welcome to my React Markdown Previewer!
+const INITIAL_STATE = `This is a paragraph. 
 
-## This is a sub-heading...
-### And here's some other cool stuff:
+**With bolded text.**
 
-Heres some code, \`<div></div>\`, between 2 backticks.
-
-\`\`\`
-// this is multi-line code:
-
-function anotherExample(firstLine, lastLine) {
-  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
-    return multiLineCode;
-  }
-}
-\`\`\`
-
-You can also make text **bold**... whoa!
-Or _italic_.
-Or... wait for it... **_both!_**
-And feel free to go crazy ~~crossing stuff out~~.
-
-There's also [links](https://www.freecodecamp.org), and
 > Block Quotes!
 
-And if you want to get really crazy, even tables:
+# Heading 1
+## Heading 2
 
-Wild Header | Crazy Header | Another Header?
------------- | ------------- | -------------
-Your content can | be here, and it | can be here....
-And here. | Okay. | I think we get it.
+- list item 1
+- list item 2
+- list item 3
 
-- And of course there are lists.
-  - Some are bulleted.
-     - With different indentation levels.
-        - That look like this.
+[Visit my website](http://vicentemferrer.000webhostapp.com)
 
+This is an inline \`<div></div>\`
 
-1. And there are numbered lists too.
-1. Use just 1s if you want!
+This is a block of code:
+
+\`\`\`
+  const { prop } = Object;
+
+  console.log(prop);
+\`\`\`
+
+![React Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png)
 `;
 
 class App extends Component {
@@ -64,17 +51,30 @@ class App extends Component {
   render() {
     const { text } = this.state;
 
-    const markdown = marked.parse(text);
+    const markdown = marked(text, { breaks: true });
 
     return (
-      <Container className='text-center m-5'>
-        <h1 className='m-5'>Convert your Markdown here</h1>
+      <Container className='text-center mt-auto mx-auto'>
         <Row className='m-5'>
           <Col sm={6}>
-            <textarea className='form-control' value={ text } id='editor' onChange={ this.handleChange } />
-          </Col>
+            <Card className='Card'>
+              <CardTitle className='left pt-3 ps-3'>
+                <h3><FontAwesomeIcon icon={ faPencil } /> Editor</h3>
+              </CardTitle>
+              <CardBody>
+                <textarea className='form-control' value={ text } id='editor' onChange={ this.handleChange } />
+              </CardBody>
+            </Card>
+          </Col>         
           <Col sm={6}>
-            <div id='preview' className='preview' dangerouslySetInnerHTML={{ __html: markdown }}></div>
+            <Card className='Card'>
+              <CardTitle className='left pt-3 ps-3'>
+                <h3><FontAwesomeIcon icon={ faEye } /> Preview</h3>
+              </CardTitle>
+              <CardBody>
+                <div id='preview' className='preview' dangerouslySetInnerHTML={{ __html: markdown }} />
+              </CardBody>
+            </Card>
           </Col>
         </Row>
       </Container>
